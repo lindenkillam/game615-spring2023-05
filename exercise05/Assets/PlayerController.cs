@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Coin"))
+        if (other.CompareTag("coin"))
         {
             score++;
             ScoreText.text = score.ToString();
