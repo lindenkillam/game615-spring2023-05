@@ -10,12 +10,12 @@ public class PlayerController : MonoBehaviour
     public bool TimerOn = false;
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI Timer;
-    public int score;
-    float moveSpeed = 5f;
+    public int score = 0;
+    float moveSpeed = 60f;
     float rotateSpeed = 75f;
     void Start()
     {
-        score = 1;
+        //score = 0;
         TimerOn = true;
         TimeLeft = 50;
     }
@@ -27,9 +27,25 @@ public class PlayerController : MonoBehaviour
         float hAxis = Input.GetAxis("Horizontal");
         float vAxis = Input.GetAxis("Vertical");
 
+
+        GameObject obj = GameObject.Find("ScoreText");
+        ScoreText = (TextMeshProUGUI)obj.GetComponent<TMP_Text>();
+        ScoreText.text = "Score: 0/3";
+
+        //GameObject obj1 = GameObject.Find("Timer");
+        //Timer = (TextMeshProUGUI)obj.GetComponent<TMP_Text>();
+        //ScoreText.text = " sc";
+
         gameObject.transform.Translate(gameObject.transform.forward * Time.deltaTime * moveSpeed * vAxis, Space.World);
 
         gameObject.transform.Rotate(0, rotateSpeed * Time.deltaTime * hAxis, 0);
+
+        //if (Input.GetKey(KeyCode.W))
+        //{
+        //    //gameObject.transform.Translate(gameObject.transform.forward*speed);
+        //    gameObject.transform.Rotate(rotateSpeed * Time.deltaTime * -1, 0, 0, Space.Self);
+        //    moveSpeed -= .01f;
+        //}
 
         if (TimerOn)
         {
@@ -59,8 +75,11 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Coin"))
         {
             score ++;
+            ScoreText.text = score.ToString();
             Destroy(other.gameObject);
-            
+           
+
+
         }
     }
 }
