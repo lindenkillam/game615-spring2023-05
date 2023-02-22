@@ -31,11 +31,6 @@ public class PlayerController : MonoBehaviour
         GameObject obj = GameObject.Find("ScoreText");
         ScoreText = (TextMeshProUGUI)obj.GetComponent<TMP_Text>();
         ScoreText.text = "Score: 0/3";
-
-        //GameObject obj1 = GameObject.Find("Timer");
-        //Timer = (TextMeshProUGUI)obj.GetComponent<TMP_Text>();
-        //ScoreText.text = " sc";
-
         gameObject.transform.Translate(gameObject.transform.forward * Time.deltaTime * moveSpeed * vAxis, Space.World);
 
         gameObject.transform.Rotate(0, rotateSpeed * Time.deltaTime * hAxis, 0);
@@ -74,11 +69,9 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Coin"))
         {
-            score ++;
+            score++;
             ScoreText.text = score.ToString();
             Destroy(other.gameObject);
-           
-
 
         }
     }
