@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float TimeLeft;
     public bool TimerOn = false;
     public TextMeshProUGUI ScoreText;
-    public TextMeshProUGUI TimerText;
+    public TextMeshProUGUI Timer;
     public int score;
     float moveSpeed = 5f;
     float rotateSpeed = 75f;
@@ -17,30 +17,37 @@ public class PlayerController : MonoBehaviour
     {
         score = 1;
         TimerOn = true;
-        TimeLeft = 30;
+        TimeLeft = 50;
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        float hAxis = Input.GetAxis("Horizontal");
+        float vAxis = Input.GetAxis("Vertical");
+
+        gameObject.transform.Translate(gameObject.transform.forward * Time.deltaTime * moveSpeed * vAxis, Space.World);
+
+        gameObject.transform.Rotate(0, rotateSpeed * Time.deltaTime * hAxis, 0);
+
         if (TimerOn)
         {
-            if (TimeLeft > 0 && score < 6)
+            if (TimeLeft > 0 && score < 3)
             {
                 TimeLeft -= Time.deltaTime;
-                TimerText.text = TimeLeft.ToString();
+                Timer.text = TimeLeft.ToString();
             }
-            else if (TimeLeft > 0 && score == 6)
+            else if (TimeLeft > 0 && score == 3)
             {
-                ScoreText.text = "You Win!";
+                ScoreText.text = " Winner!";
             }
             else
             {
                 TimeLeft = 0;
-                TimerText.text = TimeLeft.ToString();
+                Timer.text = TimeLeft.ToString();
                 TimerOn = false;
-                ScoreText.text = "You lose! Don't know how to stop game yet, so just pretend gameover:D";
+                ScoreText.text = "You lose! ";
 
             }
 
@@ -49,10 +56,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("coin"))
+        if (other.CompareTag("Coin"))
         {
+            score ++;
             Destroy(other.gameObject);
-            score += 1;
+            
         }
     }
 }
